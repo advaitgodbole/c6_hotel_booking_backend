@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch EurekaDiscoveryServiceApplication",
+            "request": "launch",
+            "mainClass": "com.sweethome.eurekadiscoveryservice.EurekaDiscoveryServiceApplication",
+            "projectName": "eureka-discovery-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BookingServiceApplication<booking-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.sweethome.bookingservice.BookingServiceApplication",
+            "projectName": "booking-service",
+            "args": ""
+        }
+    ]
+}
