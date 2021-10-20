@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 @SpringBootApplication
-@EnableEurekaClient
+// @EnableEurekaClient
 public class BookingServiceApplication {
 
 	public static void main(String[] args) {
