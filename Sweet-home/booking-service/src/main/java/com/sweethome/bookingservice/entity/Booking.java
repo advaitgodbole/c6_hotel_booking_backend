@@ -1,6 +1,7 @@
 package com.sweethome.bookingservice.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Booking {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookingId;
     @Column(nullable=true)
     private Date fromDate;
@@ -30,7 +31,7 @@ public class Booking {
     @Column(nullable=true)
     private Integer numberOfRooms;
     @Column(nullable=true)
-    private String roomNumbers;
+    private ArrayList<String> roomNumbers;
     @Column(nullable=false,columnDefinition = "integer default 0")
     private Integer roomPrice;
     @Column(nullable=true,columnDefinition = "integer default 0")
