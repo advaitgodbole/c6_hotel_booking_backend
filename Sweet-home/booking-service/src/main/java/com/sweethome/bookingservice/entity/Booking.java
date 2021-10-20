@@ -21,14 +21,21 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer bookingId;
+    @Column(nullable=true)
     private Date fromDate;
+    @Column(nullable=true)
     private Date toDate;
+    @Column(nullable=true)
     private String aadharNumber;
+    @Column(nullable=true)
     private Integer numberOfRooms;
+    @Column(nullable=true)
     private String roomNumbers;
-    @Column(columnDefinition = "integer default 0")
+    @Column(nullable=false,columnDefinition = "integer default 0")
     private Integer roomPrice;
-    @Column(columnDefinition = "integer default 0")
+    @Column(nullable=true,columnDefinition = "integer default 0")
     private int transactionId;
+    @Column(nullable=true)
+    private Date bookedOn;
 
 }
