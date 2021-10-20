@@ -4,6 +4,6 @@ CREATE TABLE transaction (
     paymentMode VARCHAR(50),
     bookingId int NOT NULL,
     upiId VARCHAR(50),
-    cardNumber VARCHAR(50),
-    FOREIGN KEY (bookingId) REFERENCES booking(bookingId)
+    cardNumber VARCHAR(50)
+    -- FOREIGN KEY (bookingId) REFERENCES booking(bookingId)
 );
