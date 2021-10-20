@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingTransaction {
+public class TransactionDetailsEntity {
     
-    private Integer bookingId;
     private Integer transactionId;
+    private String paymentMode;
+    private Integer bookingId;
+    private String upiId;
+    private String cardNumber;
     
 }

@@ -17,8 +17,8 @@ public class BookingServiceApplication {
 		SpringApplication.run(BookingServiceApplication.class, args);
 	}
 
-	// @Bean
-	// private RestTemplate restTemplate(){
-	// 	return new RestTemplate();
-	// } 
+	@Bean
+	public RestTemplate restTemplate(){
+		return new RestTemplate();
+	}
 }

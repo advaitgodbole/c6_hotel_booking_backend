@@ -1,5 +1,6 @@
 package com.sweethome.bookingservice.controller;
 
+import com.sweethome.bookingservice.VO.TransactionDetailsEntity;
 import com.sweethome.bookingservice.entity.Booking;
 import com.sweethome.bookingservice.service.BookingService;
 
@@ -33,5 +34,15 @@ public class BookingController {
     public Booking findbyBookingId(@PathVariable("id") Integer bookingId){
         log.info("Inside findBookingById method of BookingController");
         return bookingService.findByBookingId(bookingId);
+    }
+
+    @PostMapping("/{id}/transaction")
+    public Booking sendPaymentDetailsAndSaveBooking(
+        @PathVariable("id") Integer bookingId,
+        @RequestBody TransactionDetailsEntity restPayload
+    ){
+        log.info("Inside sendPaymentDetailsAndSaveBooking method of BookingController");
+
+        return bookingService.sendPaymentDetailsAndSaveBooking(bookingId, restPayload);
     }
 }
