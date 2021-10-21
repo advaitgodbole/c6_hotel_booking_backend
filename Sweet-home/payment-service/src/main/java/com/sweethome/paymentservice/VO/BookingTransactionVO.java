@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class BookingTransactionVO {
     
     private String paymentMode;
+    private Integer transactionId;
     private Integer bookingId;
     private String upiId;
     private String cardNumber;

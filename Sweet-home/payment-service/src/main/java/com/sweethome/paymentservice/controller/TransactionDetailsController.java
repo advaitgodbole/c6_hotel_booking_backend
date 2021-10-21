@@ -2,6 +2,7 @@ package com.sweethome.paymentservice.controller;
 
 import com.sweethome.paymentservice.entity.TransactionDetailsEntity;
 import com.sweethome.paymentservice.service.TransactionDetailsService;
+import com.sweethome.paymentservice.VO.BookingTransactionVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +23,34 @@ public class TransactionDetailsController {
     private TransactionDetailsService transactionDetailsService;
 
     @PostMapping("")
-    // @PostMapping("transaction")
-    public TransactionDetailsEntity saveTransactionDetails(
-        @RequestBody TransactionDetailsEntity transactionDetailsEntity
+    public BookingTransactionVO saveTransactionDetails(
+        @RequestBody BookingTransactionVO restPayload
     ){
         log.info("Inside saveTransactionDetails method of TransactionDetailsController");
-        return transactionDetailsService.saveTransactionDetails(transactionDetailsEntity);
+        Integer payloadBookingId = restPayload.getBookingId();
+        log.info(String.valueOf(payloadBookingId));
+    
+        TransactionDetailsEntity testEntity = 
+            transactionDetailsService.findByBookingId(payloadBookingId);
+        
+        if (testEntity == null){
+            TransactionDetailsEntity saveEntity = 
+                new TransactionDetailsEntity();
+            
+            saveEntity.setBookingId(payloadBookingId);
+            saveEntity.setCardNumber(restPayload.getCardNumber());
+            saveEntity.setPaymentMode(restPayload.getPaymentMode());
+            saveEntity.setUpiId(restPayload.getUpiId());
+            transactionDetailsService.saveTransactionDetails(saveEntity);
+            
+            TransactionDetailsEntity newEntity = 
+                transactionDetailsService.findByBookingId(payloadBookingId);
+            
+            restPayload.setTransactionId(newEntity.getTransactionId());
+            return restPayload;
+        }
+        restPayload.setTransactionId(testEntity.getTransactionId());
+        return restPayload;
     }
 
     @GetMapping("/{id}")

@@ -26,4 +26,10 @@ public class TransactionDetailsService {
         log.info("Inside findByTransactionId method of TransactionDetailsService");
         return transactionDetailsRepository.findByTransactionId(transactionId);
     }
+
+    public TransactionDetailsEntity findByBookingId(Integer bookingId) {
+        log.info("Inside findByBookingId method of TransactionDetailsService");
+        return transactionDetailsRepository.findByBookingId(bookingId);
+    }
+    
 }

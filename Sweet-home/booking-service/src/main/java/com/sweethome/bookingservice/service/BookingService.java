@@ -4,13 +4,10 @@ import com.sweethome.bookingservice.entity.Booking;
 import com.sweethome.bookingservice.repository.BookingRepository;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.sweethome.bookingservice.VO.BookingTransactionVO;
-import com.sweethome.bookingservice.VO.TransactionDetailsEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,35 +49,24 @@ public class BookingService {
         return bookingRepository.findByBookingId(bookingId);
     }
 
-    // public BookingTransactionVO getTransactionIdForBooking(Integer bookingId){
-    //     log.info("Inside getTransactionIdForBooking of BookingService");
-    //     BookingTransactionVO bookingTransaction = new BookingTransactionVO();
-    //     Booking booking = bookingRepository.findByBookingId(bookingId);
-
-    //     // TransactionDetailsEntity
-    //     return bookingTransaction;
-    // }
-
     public Booking sendPaymentDetailsAndSaveBooking(
         Integer bookingId,
-        TransactionDetailsEntity restPayload
+        BookingTransactionVO restPayload
     ) {
         log.info("Inside sendPaymentDetailsAndSaveBooking of BookingService");
-        // BookingTransactionVO bookingTransactionVO = new BookingTransactionVO();
         Booking booking = bookingRepository.findByBookingId(bookingId);
-        // TransactionDetailsEntity restPayload = new TransactionDetailsEntity();
         restPayload.setBookingId(
             booking.getBookingId()
         );
 
-        TransactionDetailsEntity transactionDetailsEntity = 
+        BookingTransactionVO bookingTransactionVO = 
             restTemplate.postForObject(
                 "http://PAYMENT-SERVICE/transaction", 
                 restPayload,
-                TransactionDetailsEntity.class 
+                BookingTransactionVO.class 
             );
 
-        Integer trId = transactionDetailsEntity.getTransactionId();
+        Integer trId = bookingTransactionVO.getTransactionId();
         booking.setTransactionId(trId);
         
         return bookingRepository.save(booking);

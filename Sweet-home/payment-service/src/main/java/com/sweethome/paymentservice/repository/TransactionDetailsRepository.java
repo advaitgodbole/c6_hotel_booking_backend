@@ -11,5 +11,7 @@ public interface TransactionDetailsRepository extends JpaRepository<TransactionD
     // TransactionDetailsEntity findTransactionById(Integer transactionId);
 
     TransactionDetailsEntity findByTransactionId(Integer transactionId);
+
+    TransactionDetailsEntity findByBookingId(Integer bookingId);
     
 }
