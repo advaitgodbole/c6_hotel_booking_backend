@@ -21,4 +21,9 @@ public class TransactionDetailsService {
         log.info("Inside saveTransactionDetails method of TransactionDetailsService");
         return transactionDetailsRepository.save(transactionDetailsEntity);
     }
+
+    public TransactionDetailsEntity findByTransactionId(Integer transactionId) {
+        log.info("Inside findByTransactionId method of TransactionDetailsService");
+        return transactionDetailsRepository.findByTransactionId(transactionId);
+    }
 }

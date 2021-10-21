@@ -4,6 +4,8 @@ import com.sweethome.paymentservice.entity.TransactionDetailsEntity;
 import com.sweethome.paymentservice.service.TransactionDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +28,13 @@ public class TransactionDetailsController {
     ){
         log.info("Inside saveTransactionDetails method of TransactionDetailsController");
         return transactionDetailsService.saveTransactionDetails(transactionDetailsEntity);
+    }
+
+    @GetMapping("/{id}")
+    public TransactionDetailsEntity findByTransactionId(
+        @PathVariable("id") Integer transactionId
+    ){
+        log.info("Inside findByTransactionId method of TransactionDetailsController");
+        return transactionDetailsService.findByTransactionId(transactionId);
     }
 }
