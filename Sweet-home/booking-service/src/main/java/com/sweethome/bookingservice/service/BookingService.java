@@ -75,7 +75,7 @@ public class BookingService {
 
         TransactionDetailsEntity transactionDetailsEntity = 
             restTemplate.postForObject(
-                "http://localhost:9003/transaction", 
+                "http://PAYMENT-SERVICE/transaction", 
                 restPayload,
                 TransactionDetailsEntity.class 
             );
