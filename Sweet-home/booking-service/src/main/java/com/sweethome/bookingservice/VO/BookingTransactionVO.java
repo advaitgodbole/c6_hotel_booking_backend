@@ -1,6 +1,6 @@
 package com.sweethome.bookingservice.VO;
 
-import com.sweethome.bookingservice.entity.Booking;
+// import com.sweethome.bookingservice.entity.Booking;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
