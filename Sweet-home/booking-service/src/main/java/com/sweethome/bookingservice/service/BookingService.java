@@ -10,6 +10,7 @@ import java.util.Random;
 import com.sweethome.bookingservice.VO.BookingTransactionVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +25,10 @@ public class BookingService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    KafkaTemplate<String,String> kafkaTemplate;
+    private static final String TOPIC = "message";
 
     public Booking saveBooking(Booking booking) {
         log.info("Inside saveBooking method of BookingService");
@@ -68,7 +73,14 @@ public class BookingService {
 
         Integer trId = bookingTransactionVO.getTransactionId();
         booking.setTransactionId(trId);
+
+        String message = 
+            "Booking confirmed for user with aadhaar number: " + 
+            booking.getAadharNumber() + "  |  " + 
+            "Here are the booking details: " + booking.toString();
         
+        kafkaTemplate.send(TOPIC,message);
+
         return bookingRepository.save(booking);
     }
 
