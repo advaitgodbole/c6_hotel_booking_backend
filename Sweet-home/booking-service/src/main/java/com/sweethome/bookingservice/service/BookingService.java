@@ -1,18 +1,21 @@
 package com.sweethome.bookingservice.service;
 
 import com.sweethome.bookingservice.entity.Booking;
+import com.sweethome.bookingservice.exceptions.BadRequestException;
+import com.sweethome.bookingservice.exceptions.RecordNotFoundException;
 import com.sweethome.bookingservice.repository.BookingRepository;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.sweethome.bookingservice.VO.BookingTransactionVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,9 +52,40 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public Booking findByBookingId(Integer bookingId) {
+    public Booking findByBookingId(
+        Integer bookingId
+    ) {
         log.info("Inside findBookingById method of BookingService");
-        return bookingRepository.findByBookingId(bookingId);
+        // try {
+        //     Booking booking = 
+        //     bookingRepository.findByBookingId(bookingId);
+        //     return booking;
+        // } 
+        // catch (RecordNotFoundException e){
+        //     throw new ResponseStatusException(
+        //         HttpStatus.NOT_FOUND,
+        //         "Booking not found",
+        //         e
+        //     );
+        // }
+        // if (booking==null) {
+        //     throw RecordNotFoundException();
+        // }
+        boolean exists = bookingRepository.existsById(bookingId);
+        if (exists){
+            return bookingRepository.findByBookingId(bookingId);
+        } else {
+            // throw new ResponseStatusException(
+            //     HttpStatus.NOT_FOUND,
+            //     "Booking not found"
+            // ); 
+            throw new RecordNotFoundException(
+                "Invalid booking id: " + bookingId
+            );
+        }
+
+        // return bookingRepository.findByBookingId(bookingId);
+        // return booking;
     }
 
     public Booking sendPaymentDetailsAndSaveBooking(
@@ -60,9 +94,25 @@ public class BookingService {
     ) {
         log.info("Inside sendPaymentDetailsAndSaveBooking of BookingService");
         Booking booking = bookingRepository.findByBookingId(bookingId);
+        
+        if (booking==null){
+            throw new RecordNotFoundException(
+                "Invalid booking id: " + bookingId
+            );
+        }
+        
         restPayload.setBookingId(
             booking.getBookingId()
         );
+
+        if (
+            restPayload.getPaymentMode() != "UPI"
+            || restPayload.getPaymentMode() != "CARD"
+        ){
+            throw new BadRequestException(
+                "Invalid mode of payment"
+            );
+        }
 
         BookingTransactionVO bookingTransactionVO = 
             restTemplate.postForObject(
