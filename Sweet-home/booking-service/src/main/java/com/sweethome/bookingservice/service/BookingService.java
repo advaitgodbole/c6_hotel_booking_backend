@@ -104,15 +104,19 @@ public class BookingService {
         restPayload.setBookingId(
             booking.getBookingId()
         );
-
+        String paymentMode = restPayload.getPaymentMode();
+        
         if (
-            restPayload.getPaymentMode() != "UPI"
-            || restPayload.getPaymentMode() != "CARD"
+            !(
+                ("UPI".equals(paymentMode))
+                || ("CARD".equals(paymentMode))
+            )
         ){
             throw new BadRequestException(
                 "Invalid mode of payment"
             );
         }
+        // log.info(restPayload.getPaymentMode());
 
         BookingTransactionVO bookingTransactionVO = 
             restTemplate.postForObject(
