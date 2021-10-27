@@ -53,7 +53,7 @@ Then to run the service, execute the following command:
 
 `jar -cp _path_to_jar_ "consumer"`.
 
-**NOTE:** The project folder is a git repo with a `main` branch and a `dev` branch. Please use the `main` branch code.
+**NOTE:** The project folder is a git repo with a `main` branch and a `dev` branch. Please use the `main` branch code. If there are problem running the project, please download a clean copy from <https://github.com/advaitgodbole/c6_hotel_booking_backend>.
 ## Running the app(s)
 
 The project folder contains individual microservices, one each for the services described in the problem statement given to us. To run the project, the above command will need to be executed in the root project folder of each individual project. **Ensure that the Eureka server service "`eureka-discovery-service`" is running before the "`booking-service`" and "`payment-service`" are started**.
